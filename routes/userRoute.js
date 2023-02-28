@@ -3,7 +3,8 @@ const router = express.Router();
 const {
   getUsers,
   getUser,
-  createUser,
+  signupUser,
+  loginUser,
   updateUser,
   deleteUser
 } = require('../controllers/userController');
@@ -14,8 +15,11 @@ router.get('/', getUsers);
 // get a single user
 router.get('/:id', getUser);
 
-// post a new user
-router.post('/', createUser);
+// post/sign up a new user
+router.post('/signup', signupUser);
+
+// login a user
+router.post('/login', loginUser);
 
 // update a user
 router.patch('/:id', updateUser);

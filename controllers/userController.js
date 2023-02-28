@@ -1,5 +1,11 @@
 const User = require('../models/userModel');
 const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken')
+
+// create tokens
+const createToken = (_id) => {
+    return jwt.sign({_id}, process.env.SECRET, { expiresIn: '3d' })
+}
 
 // get all users
 const getUsers = async (req, res) => {
@@ -29,16 +35,35 @@ const getUser = async (req, res) => {
     res.status(200).json(user);
 }
 
-// create a new user
-const createUser = async (req, res) => {
-    let {username, email, password, role, image} = req.body;
+// create/sign up user
+const signupUser = async (req, res) => {
+    const { username, email, password, role, image } = req.body
 
-    // add doc to db
     try {
-        const user = await User.create({username, email, password, role, image});
-        res.status(200).json(user);
-    } catch(error) {
-        res.status(400).json({error: error.message});
+        const user = await User.signup(username, email, password, role, image)
+
+        // create a token
+        const token = createToken(user._id)
+
+        res.status(200).json({user, token})
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+}
+
+// login user
+const loginUser = async (req, res) => {
+    const { email, password } = req.body
+
+    try {
+        const user = await User.login(email, password)
+
+        // create a token
+        const token = createToken(user._id)
+
+        res.status(200).json({user, token})
+    } catch (error) {
+        res.status(400).json({error: error.message})
     }
 }
 
@@ -81,7 +106,8 @@ const updateUser = async (req, res) => {
 module.exports = {
     getUsers,
     getUser,
-    createUser,
+    signupUser,
+    loginUser,
     deleteUser,
     updateUser
 }
