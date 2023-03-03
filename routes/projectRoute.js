@@ -1,4 +1,5 @@
 const express = require('express');
+const router = express.Router();
 const {
   getProjects,
   getProject,
@@ -8,8 +9,10 @@ const {
   addTicketToProject,
   removeTicketFromProject
 } = require('../controllers/projectController');
+const requireAuth = require('../middleware/requireAuth')
 
-const router = express.Router();
+// check if user is logged in
+router.use(requireAuth)
 
 // Get all projects
 router.get('/', getProjects);

@@ -7,6 +7,10 @@ const {
   updateTicket,
   deleteTicket
 } = require('../controllers/ticketController');
+const requireAuth = require('../middleware/requireAuth')
+
+// check if user is logged in
+router.use(requireAuth)
 
 // get all tickets
 router.get('/', getTickets);
