@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
 
-const ticketSchema = new mongoose.Schema({
+const ticketSchema = new Schema({
     title: {
         type: String,
         required: true
@@ -12,12 +12,12 @@ const ticketSchema = new mongoose.Schema({
         required: false
     },
     createdBy: {
-        type: String,
-        required: true
-    },
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }, 
     dev: {
-        type: String,
-        required: true
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
     },
     dateCreated: {
         type: Date,
@@ -28,6 +28,10 @@ const ticketSchema = new mongoose.Schema({
         required: true
     }, 
     type: {
+        type: String,
+        required: true
+    },
+    priority: {
         type: String,
         required: true
     },

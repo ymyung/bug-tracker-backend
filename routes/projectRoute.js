@@ -5,7 +5,7 @@ const {
   getProject,
   createProject,
   deleteProject,
-  updateProject,
+  addDeveloperToProject,
   addTicketToProject,
   removeTicketFromProject
 } = require('../controllers/projectController');
@@ -26,11 +26,11 @@ router.post('/', createProject);
 // Delete a project
 router.delete('/:id', deleteProject);
 
-// Update a project
-router.patch('/:id', updateProject);
+// Add dev to a project
+router.patch('/addDeveloper/:projectId', addDeveloperToProject);
 
 // Add a ticket to a project
-router.post('/addTicket/:projectId', addTicketToProject);
+router.patch('/addTicket/:projectId', addTicketToProject);
 
 // Remove a ticket from a project
 router.delete('/deleteTicket/:projectId', removeTicketFromProject);
