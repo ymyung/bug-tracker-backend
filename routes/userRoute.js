@@ -8,6 +8,7 @@ const {
   changePassword,
   loginUser,
   updateUser,
+  addTicketUser,
   deleteUser
 } = require('../controllers/userController');
 

@@ -1,4 +1,5 @@
 const User = require('../models/userModel');
+const Ticket = require('../models/ticketModel')
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken')
 const validator = require('validator');
@@ -11,7 +12,13 @@ const createToken = (_id) => {
 // get all users
 const getUsers = async (req, res) => {
     try {
-        const users = await User.find({}).sort({createdAt: -1});
+        const users = await User.find({})
+        .select( '-password' )
+        .sort({ username: 1 })
+        .populate({
+            path: 'tickets',
+            select: 'title description createdBy dev dateCreated dueDate type priority status dateResolved'
+        })
 
         res.status(200).json(users);
     } catch (err) {
@@ -27,7 +34,11 @@ const getUser = async (req, res) => {
         return res.status(404).json({error: 'No such user'});
     }
 
-    const user = await User.findById(id);
+    const user = await User.findById(id)
+    .populate({
+        path: 'tickets',
+        select: 'title description createdBy dev dateCreated dueDate type priority status dateResolved'
+    })
 
     if(!user) {
         return res.status(404).json({error: 'No such user'});
@@ -46,6 +57,10 @@ const getUserEmail = async (req, res) => {
 
     try {
         const user = await User.findOne({ email: email }).select('-password')
+        .populate({
+            path: 'tickets',
+            select: 'title description createdBy dev dateCreated dueDate type priority status dateResolved'
+        })
 
         if (!user) {
             return res.status(404).json({error: 'User not found'})

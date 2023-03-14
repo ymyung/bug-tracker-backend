@@ -83,6 +83,7 @@ userSchema.statics.login = async function (email, password) {
     return user
 }
 
+// Change password
 userSchema.statics.password = async function (_id, password) {
     if (!password) {
         throw Error('Password must be filled')

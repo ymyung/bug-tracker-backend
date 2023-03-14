@@ -5,6 +5,15 @@ const mongoose = require('mongoose')
 const getTickets = async (req, res) => {
     try {
         const tickets = await Ticket.find({}).sort({createdAt: -1})
+        .populate({
+            path: 'createdBy',
+            select: 'username email role image'
+        })
+        .populate({
+            path: 'dev',
+            select: 'username email role image'
+        })
+
         res.status(200).json(tickets)
     } catch (err) {
         res.status(500).json({error: err.message})
@@ -19,9 +28,19 @@ const getTicket = async (req, res) => {
     }
     try {
         const ticket = await Ticket.findById(id)
+        .populate({
+            path: 'createdBy',
+            select: 'username email role image'
+        })
+        .populate({
+            path: 'dev',
+            select: 'username email role image'
+        })
+        
         if (!ticket) {
         return res.status(404).json({error: 'No such ticket'})
         }
+
         res.status(200).json(ticket)
     } catch (err) {
         res.status(500).json({error: err.message})
