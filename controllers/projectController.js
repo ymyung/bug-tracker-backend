@@ -6,7 +6,7 @@ const mongoose = require('mongoose')
 // get all projects
 const getProjects = async (req, res) => {
     try {
-        const projects = await Project.find({}).sort({createdAt: -1})
+        const projects = await Project.find({}).sort({createdAt: 1})
         .populate({
             path: 'devs',
             select: 'username email role image'
@@ -171,10 +171,10 @@ const removeDeveloperFromProject = async (req, res) => {
     }
 }
 
-// Add a ticket to a project and user
+// Add ticket to project and user
 const addTicketToProject = async (req, res) => {
-    const { projectId } = req.params;
-    const { _id, userId } = req.body;
+    const { projectId } = req.params
+    const { _id, userId } = req.body
 
     if (!mongoose.Types.ObjectId.isValid(projectId) || !mongoose.Types.ObjectId.isValid(_id) || !mongoose.Types.ObjectId.isValid(userId)) {
         return res.status(404).json({ error: 'Invalid project, ticket ID or user ID' });
@@ -202,7 +202,7 @@ const addTicketToProject = async (req, res) => {
             }
         }, { new: true })
 
-        res.status(200).json(response)
+        res.status(200).json(response2)
     } catch (error) {
         if (error.code === 11000) {
             return res.status(400).json('Ticket already exists in the project');

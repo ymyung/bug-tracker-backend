@@ -37,7 +37,7 @@ router.patch('/addDeveloper/:projectId', addDeveloperToProject);
 // Remove Dev and dev's tickets from project
 router.patch('/removeDeveloper/:projectId', removeDeveloperFromProject)
 
-// Add a ticket to a project and user
+// Add ticket to project and user
 router.patch('/addTicket/:projectId', addTicketToProject);
 
 // Remove a ticket from a project and user 

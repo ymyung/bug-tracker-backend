@@ -47,7 +47,7 @@ const getTicket = async (req, res) => {
     }
 }
 
-// post ticket
+// create a ticket
 const createTicket = async (req, res) => {
     const ticket = new Ticket(req.body)
     try {
