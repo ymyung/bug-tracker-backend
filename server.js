@@ -13,6 +13,7 @@ const app = express()
 // cors
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', 'https://bug-tracker-frontend-44ie.onrender.com');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
     next();
 });
 
