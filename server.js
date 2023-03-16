@@ -11,11 +11,7 @@ const userRoute = require('./routes/userRoute')
 const app = express()
 
 // cors
-app.use(
-    cors({
-        origin: "https://bug-tracker-frontend-44ie.onrender.com/"
-    })
-)
+app.use(cors())
 
 // middleware
 app.use(express.json())
