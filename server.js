@@ -12,7 +12,7 @@ const app = express()
 
 // cors
 app.use(cors({
-    origin: 'http://localhost:3000'
+    origin: 'https://bug-tracker-frontend-44ie.onrender.com/'
 }))
 
 // middleware
